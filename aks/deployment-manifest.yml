@@ -1,0 +1,48 @@
+# Definición Representación de Objetos en Kubernetes https://kubernetes.io/es/docs/concepts/overview/working-with-objects/kubernetes-objects/
+apiVersion: apps/v1
+kind: Deployment # Definición objetos a construir en Kubernetes tipo Deployment
+metadata:
+  name: azure-ms-name-container-service
+  namespace: dev
+  labels:
+    app: azure-ms-name-container-service
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: azure-ms-name-container-service
+    spec:
+      # Configurar objetos a orquetar por Kubernetes tipo contenedor
+      containers:
+      - name: azure-ms-name-container-service # NOMBRE ID OBJETO CONTENEDOR
+        image: ARC_LOGIN_SERVER_NOMBRE/aplicaciones/NOMBRE_IMAGEN:VERSION # RUTA REPOSITORIO IMAGEN EN ACR
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+        # Configuración variables de entorno del contenedor
+        env:
+        - name: dev
+          value: "azure-ms-name-container-service"
+---
+# Crear balanceador de carga en la nube Azure para obtener una IP de acceso externo
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-ms-name-container-service
+  namespace: dev
+spec:
+  type: LoadBalancer
+  selector:
+    app: azure-ms-name-container-service
+  ports:
+  - port: 8080
