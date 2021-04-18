@@ -40,13 +40,13 @@ Para crear un namespace nuevo kubectl create -f aks/namespace-dev.json
 
 * Kubernetes
 
-- Controladores:
+Controladores:
 
   * Deployment: Iniciar la aplicación en contenedor
   * Service: Definición puerto de la aplicación por el cual este va a salir etc
   * Ingress: Por donde salen las peticiones, asociar el path con el puerto, el host por el cual va a responder etc.
 
-- Parámetros:
+Parámetros:
 
   * ClusterIP: Servicios solo son accesibles por pods/servicios que se encuentran en el mismo cluster
   * NodePort: Clientes pueden acceder a los servicios por la misma LAN. Por ejemplo servicios AKS ubicados en otros nodo pero en mismo grupo de recursos
